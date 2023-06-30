@@ -15,7 +15,7 @@ Example use:
 
 ```
 env:
-  DEFAULT_BRANCH: main
+  DEFAULT_BRANCH: master
 
 jobs:
   <job-id>:
