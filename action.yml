@@ -1,0 +1,45 @@
+name: 'Send notification on GitHub Action job status'
+description: 'This action sends a custom notification on GitHub Action job status'
+inputs:
+  slack_webhook_url:
+    description: 'Slack Incoming Webhook URL'
+    required: true
+  slack_channel:
+    description: 'Slack channel ID or name'
+    required: true
+  status:
+    description: 'Job status'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Send to Slack
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+        payload: |
+          {
+            "channel": "${{ inputs.slack_channel }}",
+            "username": "GitHub Actions",
+            "icon_emoji": ":github:",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*${{ github.repository }}* - *${{ github.workflow}}* #${{ github.run_number }} - *${{ inputs.status }}*\n`${{ github.job }}` job triggered by ${{ github.event_name }} in `${{ github.ref_name }}` branch/tag"
+                }
+              },
+              {
+                "type": "context",
+                "elements": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View details>"
+                  }
+                ]
+              }
+            ]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ inputs.slack_webhook_url }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
