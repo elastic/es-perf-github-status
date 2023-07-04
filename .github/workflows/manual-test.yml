@@ -10,7 +10,7 @@ jobs:
   test:
     runs-on: ubuntu-22.04
     steps:
-      - uses: elastic/es-perf-github-status@7f0fbd7f396652295608bdfdb223f0e55bd30e7a
+      - uses: elastic/es-perf-github-status@7c3c256d2a5fa5e8ee99749483661ac33283832f
         with:
           slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
           slack_channel: ${{ secrets.SLACK_CHANNEL }}
