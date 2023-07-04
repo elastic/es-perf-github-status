@@ -16,9 +16,9 @@ runs:
     - name: Send to Slack
       uses: slackapi/slack-github-action@v1.24.0
       with:
+        channel-id: ${{ inputs.slack_channel }}
         payload: |
           {
-            "channel-id": "${{ inputs.slack_channel }}",
             "text": "${{ github.repository }} - ${{ github.workflow}} #${{ github.run_number }} - ${{ inputs.status }}\n`${{ github.job }}` job triggered by ${{ github.event_name }} in `${{ github.ref_name }}` branch/tag",
             "blocks": [
               {
